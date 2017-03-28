@@ -59,7 +59,11 @@ namespace BranchPresets
 					return RenderingActionResult.None;
 
 				var relativeRenderingPath = renderingTargetItem.Paths.FullPath.Substring(branchBasePath.Length).TrimStart('/');
-				relativeRenderingPath = relativeRenderingPath.Substring(relativeRenderingPath.IndexOf('/')); // we need to skip the "/$name" at the root of the branch children
+				if(relativeRenderingPath.Contains("/"))
+					relativeRenderingPath = relativeRenderingPath.Substring(relativeRenderingPath.IndexOf('/')); // we need to skip the "/$name" at the root of the branch children
+
+                relativeRenderingPath = relativeRenderingPath.Replace("$name", ""); //To handle when the datasource is the root
+
 
 				var newTargetPath = item.Paths.FullPath + relativeRenderingPath;
 
